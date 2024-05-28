@@ -1,6 +1,4 @@
-﻿using IdentityModel.Client;
-
-namespace PeFerreira98.Chassis.Framework.Http.Oidc;
+﻿namespace PeFerreira98.Chassis.Framework.Http.Oidc;
 
 public class ClientConfigurations
 {

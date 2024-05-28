@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PeFerreira98.Chassis.Framework.Http.Oidc;
 using PeFerreira98.Chassis.Framework.Http.OidcHandler;
-using Refit;
 
 namespace PeFerreira98.Chassis.Framework.Http;
 
@@ -18,10 +17,10 @@ public static class BuilderExtensions
         return builder;
     }
 
-    public static IServiceCollection AddHttpClient<T>(this IServiceCollection services)
+    public static IServiceCollection AddNoAuthHttpClient<T>(this IServiceCollection services)
         where T : class, IRefitClient
     {
-        const string clientName = nameof(T);
+        string clientName = typeof(T).Name;
 
         services.AddRefitClient<T>()
             .ConfigureHttpClient((sProvider, hClient) => hClient.BaseAddress = GetClientUri(sProvider, clientName));
@@ -41,9 +40,9 @@ public static class BuilderExtensions
         return services;
     }
 
-    private static Uri GetClientUri(IServiceProvider sProvider, string clientName)
+    private static Uri GetClientUri(IServiceProvider serviceProvider, string clientName)
     {
-        var configs = sProvider.GetService<ClientConfigurations>();
+        var configs = serviceProvider.GetService<IOptions<ClientConfigurations>>().Value;
         var uriConfig = configs.uriCatalog[clientName];
         return uriConfig.Uri;
     }

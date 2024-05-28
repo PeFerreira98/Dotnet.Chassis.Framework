@@ -1,4 +1,6 @@
-﻿namespace PeFerreira98.Chassis.Framework.Api;
+﻿using PeFerreira98.Chassis.Framework.Api.Clients;
+
+namespace PeFerreira98.Chassis.Framework.Api;
 
 public static class ApiEndpoints
 {
@@ -10,5 +12,8 @@ public static class ApiEndpoints
             logger.LogWarning("Test WRN");
             logger.LogError("Test ERR");
         });
+
+        endpoints.MapGet("/mock", async (IMockClient client) =>
+            (await client.GetAsync()).Content);
     }
 }

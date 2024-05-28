@@ -1,6 +1,4 @@
-﻿using IdentityModel.Client;
-
-namespace PeFerreira98.Chassis.Framework.Http.OidcHandler;
+﻿namespace PeFerreira98.Chassis.Framework.Http.OidcHandler;
 
 internal class OAuth2Handler(IIdentityServerClient identityServerClient) : DelegatingHandler
 {
