@@ -60,7 +60,10 @@ public static class OpenTelemetryExtensions
         meterProviderBuilder.AddMeter(
             "Microsoft.AspNetCore.Hosting",
             "Microsoft.AspNetCore.Server.Kestrel",
-            "System.Net.Http");
+            "System.Net.Http",
+            "System.Net.Sockets",
+            "System.Net.NameResolution",
+            "System.Net.Security");
 
     private static bool UsePrometheusExporter(IConfiguration configuration) => !string.IsNullOrWhiteSpace(configuration["PROMETHEUS_METRICS_PATH"]);
 
