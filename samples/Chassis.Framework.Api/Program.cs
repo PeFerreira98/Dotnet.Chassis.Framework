@@ -22,3 +22,6 @@ app.AddPrometheusEndpoints(builder.Configuration);
 app.MapEndpoints();
 
 app.Run();
+
+// Integration Test only
+public partial class Program { }

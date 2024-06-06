@@ -13,4 +13,8 @@
 		<ProjectReference Include="..\..\src\Chassis.Framework\Chassis.Framework.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="..\..\tests\Chassis.Framework.Tests.Integration.csproj" />
+	</ItemGroup>
+
 </Project>
