@@ -17,4 +17,10 @@
     <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="IdentityModel.Client" />
+    <Using Include="Microsoft.Extensions.Logging" />
+    <Using Include="Refit" />
+  </ItemGroup>
+
 </Project>
