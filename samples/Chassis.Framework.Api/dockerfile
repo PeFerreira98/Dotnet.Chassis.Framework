@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+WORKDIR /App
+COPY . ./
+COPY ../src/. ./src
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /App
+COPY --from=build-env /App/out .
+ENV DOTNET_ENVIRONMENT=Docker
+ENV ASPNETCORE_ENVIRONMENT=Docker
+ENTRYPOINT ["dotnet", "Chassis.Framework.Api.dll"]

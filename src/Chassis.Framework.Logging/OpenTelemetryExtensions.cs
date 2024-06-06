@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -54,6 +55,18 @@ public static class OpenTelemetryExtensions
         }
 
         return builder;
+    }
+
+
+    public static WebApplication AddPrometheusEndpoints(this WebApplication app, IConfiguration configuration)
+    {
+        if (UsePrometheusExporter(configuration))
+        {
+            string exporterPath = configuration.GetValue<string>("PROMETHEUS_METRICS_PATH");
+            app.UseOpenTelemetryPrometheusScrapingEndpoint(context => context.Request.Path == exporterPath);
+        }
+
+        return app;
     }
 
     private static MeterProviderBuilder AddBuiltInMeters(this MeterProviderBuilder meterProviderBuilder) =>

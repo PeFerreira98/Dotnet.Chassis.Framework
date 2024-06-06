@@ -1,0 +1,47 @@
+services:
+  aspire:
+    image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
+    ports:
+      - 18888:18888
+      - 18889:18889
+    environment:
+      DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+
+  sample1:
+    image: chassis-framework-api:0.0.1-local
+    ports:
+      - 5050:8080
+    build:
+      context: .
+      dockerfile: samples/Chassis.Framework.Api/dockerfile
+      target: runtime
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire:18889
+
+  sample2:
+    image: chassis-framework-api:0.0.1-local
+    ports:
+      - 5051:8080
+    build:
+      context: .
+      dockerfile: samples/Chassis.Framework.Api/dockerfile
+      target: runtime
+    environment:
+      - OTEL_SERVICE_NAME=vb-framework-sample-2
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire:18889
+
+  curl:
+    image: curlimages/curl:latest
+    command: >
+      sh -c "
+        while true;
+        do 
+        curl http://sample1:8080/logs; sleep 1;
+        curl http://sample2:8080/logs; sleep 1;
+        curl http://sample1:8080/mock; sleep 1;
+        curl http://sample2:8080/mock; sleep 1;
+        done
+      "
+    depends_on:
+      - sample1
+      - sample2

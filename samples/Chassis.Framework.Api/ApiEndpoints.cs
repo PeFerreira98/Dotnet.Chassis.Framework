@@ -15,5 +15,8 @@ public static class ApiEndpoints
 
         endpoints.MapGet("/mock", async (IMockClient client) =>
             (await client.GetAsync()).Content);
+
+        endpoints.MapGet("/oauthmock", async (IOAuthMockClient client) =>
+            (await client.GetAsync()).Content);
     }
 }

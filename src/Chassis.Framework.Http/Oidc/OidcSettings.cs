@@ -11,7 +11,7 @@ public class UriCatalog : Dictionary<string, UriSettings>;
 public class UriSettings
 {
     public Uri Uri { get; set; }
-    public string Oidc { get; set; }
+    public string? Oidc { get; set; }
     public int? Timeout { get; set; }
 }
 

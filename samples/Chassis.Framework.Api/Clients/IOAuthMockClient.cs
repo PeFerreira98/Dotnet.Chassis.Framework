@@ -3,7 +3,7 @@ using Refit;
 
 namespace PeFerreira98.Chassis.Framework.Api.Clients;
 
-public interface IMockClient : IRefitClient, IDisposable
+public interface IOAuthMockClient : IRefitClient, IDisposable
 {
     [Get("/")]
     Task<IApiResponse<ResponseDto>> GetAsync();

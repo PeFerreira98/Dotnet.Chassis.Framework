@@ -13,9 +13,11 @@ builder.AddOpenTelemetry();
 
 builder.ConfigureClients();
 builder.Services.AddNoAuthHttpClient<IMockClient>();
+builder.Services.AddOAuthHttpClient<IOAuthMockClient>();
 
 var app = builder.Build();
 app.SetupDefault();
+app.AddPrometheusEndpoints(builder.Configuration);
 
 app.MapEndpoints();
 
